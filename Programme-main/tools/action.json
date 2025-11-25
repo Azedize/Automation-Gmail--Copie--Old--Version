@@ -1,0 +1,360 @@
+{
+    "openInbox": {
+        "id": "open_inbox",
+        "label": "Open Inbox",
+        "showOnInit": true,
+        "actions": ["inboxOpenMessage", "inboxSelectAll"],
+        "Template": "Template1" 
+    },
+    "inboxOpenMessage": {
+        "id": "open_message",
+        "label": "Open Message",
+        "actions": ["inboxAddContact", "inboxClick","inboxMarkAsImportant","inboxDelete","inboxReply","inboxAddStar","inboxArchive","inboxReportSpam"],
+        "Template": "Template2",
+        "name_previous":null
+    },
+    "inboxSelectAll": {
+        "id": "select_all",
+        "label": "Select All",
+        "actions": ["SelectMarkAsRead","SelectMarkAsImportant","SelectAddStar","SelectArchive"],
+        "Template": "Template2"
+    },
+    "SelectMarkAsImportant": {
+        "id": "mark_as_important",
+        "label": "Mark As Important",
+        "actions": ["SelectMarkAsRead","SelectAddStar","SelectArchive"],
+        "Template": "Template2"
+    },
+    "SelectMarkAsRead": {
+        "id": "mark_as_read",
+        "label": "Mark As Read",
+        "actions": ["SelectMarkAsImportant","SelectAddStar","SelectArchive"],
+        "Template": "Template2"
+    },
+    "SelectAddStar": {
+        "id": "add_star_Select",
+        "label": "Add Star",
+        "actions": ["SelectMarkAsImportant","SelectMarkAsRead","SelectArchive"],
+        "Template": "Template2"
+    },
+    "SelectArchive": {
+        "id": "archive",
+        "label": "Archive",
+        "actions": [],
+        "Template": "Template2"
+    },
+      "inboxAddContact": {
+        "id": "add_contacts",
+        "label": "Add Contact",
+        "actions": [ "inboxClick","inboxMarkAsImportant","inboxDelete","inboxReply","inboxAddStar","inboxArchive","inboxReportSpam"],
+        "Template": "Template2"
+      },
+      "inboxMarkAsImportant": {
+        "id": "mark_as_important",
+        "label": "Mark As Important",
+        "actions": [ "inboxAddContact", "inboxClick","inboxDelete","inboxReply","inboxAddStar","inboxArchive","inboxReportSpam"],
+        "Template": "Template2"
+      },
+      "inboxReply": {
+        "id": "reply_message",
+        "label": "Reply",
+        "actions": [ "inboxAddContact", "inboxClick","inboxMarkAsImportant","inboxDelete","inboxAddStar","inboxArchive","inboxReportSpam"],
+        "Template": "Template5"
+      },
+      "inboxDelete": {
+        "id": "delete",
+        "label": "Delete",
+        "actions": [],
+        "Template": "Template2"
+      },
+      "inboxClick": {
+        "id": "click_link",
+        "label": "Click",
+        "actions": [ "inboxAddContact","inboxMarkAsImportant","inboxDelete","inboxReply","inboxAddStar","inboxArchive","inboxReportSpam"],
+        "Template": "Template2"
+      },
+      "inboxAddStar": {
+        "id": "add_star",
+        "label": "Add As Star",
+        "actions": [ "inboxAddContact", "inboxClick","inboxMarkAsImportant","inboxDelete","inboxReply","inboxArchive","inboxReportSpam"],
+        "Template": "Template2"
+      },
+      "inboxArchive": {
+        "id": "archive",
+        "label": "Archive",
+        "actions": [],
+        "Template": "Template2"
+      },
+      "inboxReportSpam": {
+        "id": "report_spam",
+        "label": "Report Spam",
+        "actions": [],
+        "Template": "Template2"
+      },
+      "openSpam": {
+        "id": "open_spam",
+        "label": "Open Spam",
+        "showOnInit": true,
+        "actions": ["spamOpenMessage", "spamSelectAll"],
+        "Template": "Template1"
+      },
+      "spamOpenMessage": {
+        "id": "open_message",
+        "label": "Open Message",
+        "actions": ["spamAddContact", "spamClick","spamMarkAsImportant","spamDelete","spamReply","spamAddStar","spamArchive","spamNotSpam"],
+        "Template": "Template2"
+    },
+    "spamSelectAll": {
+        "id": "select_all",
+        "label": "Select All",
+        "actions": ["spamSelectMarkAsRead","spamSelectMarkAsImportant","spamSelectAddStar","spamSelectArchive","spamSelectNotSpam"],
+        "Template": "Template2"
+    },
+    "spamSelectMarkAsImportant": {
+        "id": "mark_as_important",
+        "label": "Mark As Important",
+        "actions": ["spamSelectMarkAsRead","spamSelectAddStar","spamSelectArchive","spamSelectNotSpam"],
+        "Template": "Template2"
+    },
+    "spamSelectMarkAsRead": {
+        "id": "mark_as_read",
+        "label": "Mark As Read",
+        "actions": ["spamSelectMarkAsImportant","spamSelectAddStar","spamSelectArchive","spamSelectNotSpam"],
+        "Template": "Template2"
+    },
+    "spamSelectAddStar": {
+        "id": "add_star",
+        "label": "Add Star",
+        "actions": ["spamSelectMarkAsRead","spamSelectMarkAsImportant","spamSelectArchive","spamSelectNotSpam"],
+        "Template": "Template2"
+    },
+    "spamSelectNotSpam": {
+        "id": "not_spam",
+        "label": "Not Spam",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamSelectArchive": {
+        "id": "archive",
+        "label": "Archive",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamAddContact": {
+        "id": "add_contacts",
+        "label": "Add Contact",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamMarkAsImportant": {
+        "id": "mark_as_important",
+        "label": "Mark As Important",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamReply": {
+        "id": "reply_message",
+        "label": "Reply",
+        "actions": [],
+        "Template": "Template5"
+    },
+    "spamDelete": {
+        "id": "delete",
+        "label": "Delete",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamClick": {
+        "id": "click_link",
+        "label": "Click",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamAddStar": {
+        "id": "add_star",
+        "label": "Add As Star",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamArchive": {
+        "id": "archive",
+        "label": "Archive",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "spamNotSpam": {
+        "id": "not_spam",
+        "label": "Not Spam",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "AddContactCSV": {
+        "id": "add_contacts_from_file",
+        "label": "Add Contact (CSV)",
+        "showOnInit": true,
+        "actions": [],
+        "Template": "Template2",
+        "INITAILE"  :true
+
+    },
+    "ChangeLanguage": {
+        "id": "change_language",
+        "label": "Change Language",
+        "showOnInit": true,
+        "actions": [],
+        "Template": "Template2",
+        "INITAILE"  :true
+
+    },
+    "ChangePasssword": {
+        "id": "change_password",
+        "label": "Change Passsword",
+        "showOnInit": true,
+        "actions": [],
+        "Template": "Template2",
+        "INITAILE"  :true
+
+    },
+    "ChangeRecovry": {
+        "id": "change_recovery",
+        "label": "Change Recovry",
+        "showOnInit": true,
+        "actions": [],
+        "Template": "Template2",
+        "INITAILE"  :true
+    },
+    "googleActions": {
+        "id": "google_actions",
+        "label": "Google Features",
+        "showOnInit": true,
+        "actions": ["googleMapsActions" , "trends_google" , "news_google"],
+        "Template": "Template2",
+        "isMultiSelect": true
+    },
+    "trends_google": {
+        "id": "google_trends",
+        "label": "Trends Google",
+        "actions": [],
+        "Template": "Template2"
+    },
+    "googleMapsActions": {
+        "id": "google_maps_actions",
+        "label": "Google Maps Features",
+        "actions": ["save_location", "search_activities"],
+        "Template": "Template2"
+      },
+      "news_google": {
+        "id": "google_news",
+        "label": "News Google",
+        "actions": [],
+        "Template": "Template2"
+      },
+      "save_location": {
+        "id": "save_location",
+        "label": "Save Location",
+        "actions": ["preferred_addresses", "places_to_visit", "travel_projects", "favorite_places"],
+        "Template": "Template2"
+      },
+      "search_activities": {
+        "id": "search_activities",
+        "label": "Activity Search",
+        "actions": ["restaurants", "hotels", "attractions", "museums", "transit", "pharmacies", "atms"],
+        "Template": "Template2"
+      },
+      "restaurants": {
+        "id": "google_restaurants",
+        "label": "Find Restaurants",
+        "actions": [],
+        "Template": "Template2",
+        "description": "Discover dining options in the current area"
+      },
+      "hotels": {
+        "id": "google_hotels",
+        "label": "Find Hotels",
+        "actions": [],
+        "Template": "Template2",
+        "description": "Locate accommodation options near you"
+      },
+      "attractions": {
+        "id": "google_attractions",
+        "label": "Things to Do",
+        "actions": [],
+        "Template": "Template2",
+        "description": "Explore local attractions and activities"
+      },
+      "museums": {
+        "id": "google_museums",
+        "label": "Museum Search",
+        "actions": [],
+        "Template": "Template2",
+        "description": "Discover cultural institutions in the area"
+      },
+      "transit": {
+        "id": "google_transit",
+        "label": "Transit Options",
+        "actions": [],
+        "Template": "Template2",
+        "description": "Find public transportation routes and stations"
+      },
+      "pharmacies": {
+        "id": "google_pharmacies",
+        "label": "Pharmacy Locator",
+        "actions": [],
+        "Template": "Template2",
+        "description": "Locate nearby pharmacies and drugstores"
+      },
+      "atms": {
+        "id": "google_atms",
+        "label": "ATM Finder",
+        "actions": [],
+        "Template": "Template2",
+        "description": "Find nearby automated teller machines"
+      },
+      "preferred_addresses": {
+        "id": "google_preferred_addresses",
+        "label": "Preferred Addresses",
+        "actions": [],
+        "Template": "Template3"
+      },
+      "places_to_visit": {
+        "id": "google_places_to_visit",
+        "label": "Places to Visit",
+        "actions": [],
+        "Template": "Template3"
+      },
+      "travel_projects": {
+        "id": "google_travel_projects",
+        "label": "Travel Projects",
+        "actions": [],
+        "Template": "Template3"
+      },
+      "favorite_places": {
+        "id": "google_favorite_places",
+        "label": "Favorite Places",
+        "actions": [],
+        "Template": "Template3"
+      },
+      "youtubeActions": {
+        "id": "youtube_actions",
+        "label": "YouTube Features",
+        "showOnInit": true,
+        "actions": ["youtube_Shorts", "charts_youtube"],
+        "Template": "Template2",
+        "isMultiSelect": true
+    },
+    "youtube_Shorts": {
+        "id": "youtube_Shorts",
+        "label": "Youtube Shorts",
+        "actions": [],
+        "Template": "Template4"
+    },
+    "charts_youtube": {
+        "id": "youtube_charts",
+        "label": "Charts Youtube",
+        "actions": [],
+        "Template": "Template4"
+    }
+
+}
+  
+
