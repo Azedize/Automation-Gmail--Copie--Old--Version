@@ -4533,10 +4533,10 @@ class MainWindow(QMainWindow):
             return
 
 
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            executor.submit(Start_Extraction, window, data_list , entered_number, selected_Browser, self.Isp.currentText() , unique_id , output_json_final, session_info["username"])
-            executor.submit(self.LOGS_THREAD.start)
-        EXTRACTION_THREAD.finished.connect(lambda: self.Extraction_Finished(window))
+        # with ThreadPoolExecutor(max_workers=2) as executor:
+        #     executor.submit(Start_Extraction, window, data_list , entered_number, selected_Browser, self.Isp.currentText() , unique_id , output_json_final, session_info["username"])
+        #     executor.submit(self.LOGS_THREAD.start)
+        # EXTRACTION_THREAD.finished.connect(lambda: self.Extraction_Finished(window))
 
 
 

@@ -20,7 +20,7 @@
         "Template": "Template2"
     },
     "SelectMarkAsImportant": {
-        "id": "mark_as_important",
+        "id": "mark_as_important_Select",
         "label": "Mark As Important",
         "actions": ["SelectMarkAsRead","SelectAddStar","SelectArchive"],
         "Template": "Template2"
