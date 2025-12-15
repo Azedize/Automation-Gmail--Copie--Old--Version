@@ -65,7 +65,7 @@ def install_and_import(package, module_name=None, required_import=None, version=
         module = importlib.import_module(module_to_import)
         if required_import:
             importlib.import_module(f"{module_to_import}.{required_import}")
-        print(f"✅ {package} est déjà installé (version: {getattr(module,'__version__','inconnue')})")
+        # print(f"✅ {package} est déjà installé (version: {getattr(module,'__version__','inconnue')})")
     except (ModuleNotFoundError, ImportError):
         all_packages_installed = False
         print(f"⚠️ {package} n'est pas installé. Installation en cours...")
@@ -147,7 +147,7 @@ import base64
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
-print("✅ Selenium version:", selenium.__version__)
+# print("✅ Selenium version:", selenium.__version__)
 
 # ✅ Ensure pip downgrade if packages had to be installed
 if not all_packages_installed:
@@ -408,10 +408,10 @@ if __name__ == "__main__":
             script_path = SCRIPT_DIR / 'Programme-main' / 'Python' / 'AppV2.py'
 
             if script_path.is_file():
-                print(f"▶️ Launching AppV2.py: {script_path}")
+                # print(f"▶️ Launching AppV2.py: {script_path}")
                 subprocess.call([sys.executable, str(script_path), encrypted_key, secret_key])
             else:
-                print(f"❌ AppV2.py not found at {script_path}")
+                # print(f"❌ AppV2.py not found at {script_path}")
                 sys.exit(1)
 
     except Exception as e:
