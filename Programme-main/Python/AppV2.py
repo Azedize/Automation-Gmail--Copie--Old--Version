@@ -2237,6 +2237,7 @@ class ExtractionThread(QThread):
                         Add_Pid_To_Text_File(process.pid, profile_email , inserted_id)
                     
                     else:
+                        print("✅ Navigateur sélectionné : chrome")
 
                         
 
