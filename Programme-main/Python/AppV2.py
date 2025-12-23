@@ -1610,7 +1610,7 @@ def Start_Extraction(window, data_list, entered_number , selected_Browser , Isp 
     #         }
     #     """)
 
-
+    print(" ttttttttttttttttt")
     Launch_Close_Chrome(selected_Browser , username)
     # find_chrome_for_testing() 
     browser_path = (
@@ -1705,13 +1705,13 @@ def Save_Email(params):
     
     while response_text == '':
         try:
-            #print(f"🌐 [API] Envoi de la requête ➜ {_SAVE_EMAIL_API}")
-            #print(f"📤 [DATA] Paramètres envoyés: {params}")
+            print(f"🌐 [API] Envoi de la requête ➜ {_SAVE_EMAIL_API}")
+            print(f"📤 [DATA] Paramètres envoyés: {params}")
 
             response = requests.post(_SAVE_EMAIL_API, headers=HEADERS, verify=False, data=params)
             
-            #print(f"📥 [HTTP] Code de réponse: {response.status_code}")
-            #print(f"📄 [HTTP] Réponse brute:\n{response.text}")
+            print(f"📥 [HTTP] Code de réponse: {response.status_code}")
+            print(f"📄 [HTTP] Réponse brute:\n{response.text}")
 
             # Vérification d'erreur HTTP
             response.raise_for_status()
@@ -1720,12 +1720,12 @@ def Save_Email(params):
             break
 
         except requests.exceptions.RequestException as req_err:
-            #print(f"💥 [ERREUR DE REQUÊTE] : {req_err}")
-            #print("⏳ Nouvelle tentative dans 5 secondes...")
+            print(f"💥 [ERREUR DE REQUÊTE] : {req_err}")
+            print("⏳ Nouvelle tentative dans 5 secondes...")
             time.sleep(5)
         except Exception as e:
-            #print(f"💥 [EXCEPTION] Erreur inconnue : {e}")
-            #print("⏳ Nouvelle tentative dans 5 secondes...")
+            print(f"💥 [EXCEPTION] Erreur inconnue : {e}")
+            print("⏳ Nouvelle tentative dans 5 secondes...")
             time.sleep(5)
 
     return response_text
@@ -2107,8 +2107,11 @@ class ExtractionThread(QThread):
 
         session_info = check_session(SESSION_PATH, KEY)
 
+        for k, v in session_info.items():
+            print(f"{k}: {v}")
+
         if not session_info["valid"]:
-            #print("[SESSION] ❌ Session invalide. Impossible de continuer l’extraction.")
+            print("[SESSION] ❌ Session invalide. Impossible de continuer l’extraction.")
             self.stopped.emit("Session invalide. Veuillez vous reconnecter.")
             return
         
@@ -2118,9 +2121,9 @@ class ExtractionThread(QThread):
 
 
             RESULTATS_EX = Upload_EXTENTION_PROXY("default", CLES_RECHERCHE, RESULTATS)
-            #print("↕️​↕️​↕️​↕️​↕️​ Résultats EX2 :")
+            # print("↕️​↕️​↕️​↕️​↕️​ Résultats EX2 :")
             # for item in RESULTATS_EX:
-                #print(json.dumps(item, indent=4, ensure_ascii=False))
+            #     print(json.dumps(item, indent=4, ensure_ascii=False))
 
 
         while remaining_emails or PROCESS_PIDS:
@@ -2148,11 +2151,10 @@ class ExtractionThread(QThread):
                     recovery_email = Get_Key_Value(next_email, ["recovery_email", "recoveryEmail"])
                     new_recovery_email = Get_Key_Value(next_email, ["new_recovery_email", "neWrecoveryEmail"])
 
-
                     params = {
                         'l': encrypt_message(session_info["username"],KEY),
                         'login': session_info["username"],
-                        'entity': session_info["entity"],
+                        'entity': session_info["p_entity"],
                         'isp': self.Isp,
                         'action': json.dumps(self.output_json_final),
                         'email': email_value,
@@ -2166,6 +2168,7 @@ class ExtractionThread(QThread):
                     }
 
                     inserted_id=Save_Email(params)
+                    print(" inserted_id ", inserted_id)
                     new_password = Generate_Gmail_Password(16)
 
                     session_directory = os.path.join(LOGS_DIRECTORY, f"{CURRENT_DATE}_{CURRENT_HOUR}")
@@ -2243,11 +2246,11 @@ class ExtractionThread(QThread):
 
                         profile_path = os.path.join(profiles_dir,profile_email)
                         if not os.path.exists(profile_path):
-                            #print(f"🆕 Création du profil pour {profile_email}")
+                            print(f"🆕 Création du profil pour {profile_email}")
                             Run_Browser_Create_Profile(profile_email)
                             time.sleep(3)
-                        # else:
-                            #print(f"✅ Profil déjà existant pour {profile_email}")   
+                        else:
+                            print(f"✅ Profil déjà existant pour {profile_email}")   
 
 
                         if not  RESULTATS_EX:
@@ -2260,7 +2263,7 @@ class ExtractionThread(QThread):
                             self.stop_flag = True   
                             return                   
                         else:
-                            #print(f"✅ Profil prêt pour {profile_email} avec les paramètres proxy.")
+                            print(f"✅ Profil prêt pour {profile_email} avec les paramètres proxy.")
                             Updated_Secure_Preferences(profile_email, RESULTATS_EX)
                             time.sleep(2)
 
@@ -2296,7 +2299,7 @@ class ExtractionThread(QThread):
 
                         process1 = subprocess.Popen(command) 
                         PROCESS_PIDS.append(process.pid) 
-                        #print('➡️➡️➡️➡️➡️➡️ PROCESS_PIDS : ' ,PROCESS_PIDS)
+                        print('➡️➡️➡️➡️➡️➡️ PROCESS_PIDS : ' ,PROCESS_PIDS)
                         # add_pid_to_text_file(process.pid, profile_email , inserted_id)
              
                     self.emails_processed += 1  
@@ -3004,7 +3007,7 @@ def Process_Browser(window, selected_Browser):
     # Étape 1 : Vérification du dossier de configuration
     #print("\n🔍 Étape 1 : Vérification du dossier de configuration ...")
     if not os.path.exists(CONFIG_PROFILE):
-        #print(f"❌ Le dossier requis '{CONFIG_PROFILE}' est introuvable.")
+        print(f"❌ Le dossier requis '{CONFIG_PROFILE}' est introuvable.")
         return False  
     #print(f"📂 Dossier de configuration trouvé : {CONFIG_PROFILE}")
 
@@ -3110,62 +3113,62 @@ def check_session(SESSION_PATH, KEY):
         "error": None
     }
 
-    #print(f"[INFO] Chemin du fichier session : {SESSION_PATH}")
+    print(f"[INFO] Chemin du fichier session : {SESSION_PATH}")
 
     if not os.path.exists(SESSION_PATH):
-        #print("[AVERTISSEMENT SESSION] ❌ Le fichier session.txt n'existe pas")
+        print("[AVERTISSEMENT SESSION] ❌ Le fichier session.txt n'existe pas")
         session_info["error"] = "FileNotFound"
         return session_info
 
-    #print("[INFO] Le fichier session.txt existe ✅")
+    print("[INFO] Le fichier session.txt existe ✅")
 
     try:
         with open(SESSION_PATH, "r", encoding="utf-8") as f:
             encrypted = f.read().strip()
 
-        #print(f"[INFO] Contenu chiffré lu :\n'{encrypted}'")
-        #print(f"[INFO] Longueur du contenu chiffré : {len(encrypted)} caractères")
+        print(f"[INFO] Contenu chiffré lu :\n'{encrypted}'")
+        print(f"[INFO] Longueur du contenu chiffré : {len(encrypted)} caractères")
 
         if not encrypted:
-            #print("[AVERTISSEMENT SESSION] Le fichier session.txt est vide ❌")
+            print("[AVERTISSEMENT SESSION] Le fichier session.txt est vide ❌")
             session_info["error"] = "EmptyFile"
             return session_info
 
         # Tentative de déchiffrement
         try:
             decrypted = decrypt_message(encrypted, KEY)
-            #print(f"[INFO] Contenu déchiffré complet :\n'{decrypted}'")
-            #print(f"[INFO] Longueur du contenu déchiffré : {len(decrypted)} caractères")
+            print(f"[INFO] Contenu déchiffré complet :\n'{decrypted}'")
+            print(f"[INFO] Longueur du contenu déchiffré : {len(decrypted)} caractères")
         except Exception as e:
-            #print(f"[ERREUR DECHIFFREMENT] Erreur lors du déchiffrement : {e}")
+            print(f"[ERREUR DECHIFFREMENT] Erreur lors du déchiffrement : {e}")
             session_info["error"] = f"DecryptError: {e}"
             return session_info
 
         # Analyse du contenu déchiffré
         parts = decrypted.split("::", 2)
-        #print(f"[INFO] Contenu découpé en {len(parts)} parties : {parts}")
+        print(f"[INFO] Contenu découpé en {len(parts)} parties : {parts}")
 
         if len(parts) != 3:
-            #print("[ERREUR FORMAT SESSION] ❌ Format invalide (attendu : username::date::p_entity)")
-            #print(f"[DEBUG] Contenu déchiffré complet : '{decrypted}'")
+            print("[ERREUR FORMAT SESSION] ❌ Format invalide (attendu : username::date::p_entity)")
+            print(f"[DEBUG] Contenu déchiffré complet : '{decrypted}'")
             session_info["error"] = "InvalidFormat"
             return session_info
 
         username, date_str, p_entity = [p.strip() for p in parts]
 
-        #print(f"[INFO] Nom d'utilisateur : '{username}'")
-        #print(f"[INFO] Date de session (date_str) : '{date_str}'")
-        #print(f"[INFO] p_entity : '{p_entity}'")
+        print(f"[INFO] Nom d'utilisateur : '{username}'")
+        print(f"[INFO] Date de session (date_str) : '{date_str}'")
+        print(f"[INFO] p_entity : '{p_entity}'")
 
         try:
             tz = pytz.timezone("Africa/Casablanca")
-            #print(f"[DEBUG] Conversion de la date '{date_str}' en datetime...")
+            print(f"[DEBUG] Conversion de la date '{date_str}' en datetime...")
             last_session = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
             last_session = tz.localize(last_session)
 
             now = datetime.datetime.now(tz)
-            #print(f"[INFO] Date de la session : {last_session}")
-            #print(f"[INFO] Date actuelle : {now}")
+            print(f"[INFO] Date de la session : {last_session}")
+            print(f"[INFO] Date actuelle : {now}")
 
             if (now - last_session) < timedelta(days=2):
                 session_info.update({
@@ -3174,17 +3177,17 @@ def check_session(SESSION_PATH, KEY):
                     "date": last_session,
                     "p_entity": p_entity
                 })
-                #print(f"[SESSION] ✅ Session valide pour l'utilisateur '{username}' (p_entity = {p_entity})")
+                print(f"[SESSION] ✅ Session valide pour l'utilisateur '{username}' (p_entity = {p_entity})")
             else:
-                #print("[SESSION EXPIRÉE] ⌛ La session a expiré depuis plus de 2 jours")
+                print("[SESSION EXPIRÉE] ⌛ La session a expiré depuis plus de 2 jours")
                 session_info["error"] = "Expired"
         except ValueError as e:
-            #print(f"[ERREUR FORMAT DATE] ❌ Format de date invalide : {e}")
-            #print(f"[DEBUG] Contenu complet de date_str : '{date_str}'")
+            print(f"[ERREUR FORMAT DATE] ❌ Format de date invalide : {e}")
+            print(f"[DEBUG] Contenu complet de date_str : '{date_str}'")
             session_info["error"] = f"InvalidDateFormat: {e}"
 
     except Exception as e:
-        #print(f"[ERREUR LECTURE SESSION] ❌ Exception lors de la lecture du fichier : {e}")
+        print(f"[ERREUR LECTURE SESSION] ❌ Exception lors de la lecture du fichier : {e}")
         session_info["error"] = f"FileReadError: {e}"
 
     return session_info
@@ -3214,11 +3217,11 @@ class MainWindow(QMainWindow):
         self.states = json_data
         self.STATE_STACK = []
 
-        def get_widget(name, wtype):
-            widget = self.findChild(wtype, name)
-            if widget is None:
-                print(f"⚠️ Widget '{name}' introuvable.")
-            return widget
+        # def get_widget(name, wtype):
+        #     widget = self.findChild(wtype, name)
+        #     if widget is None:
+        #         print(f"⚠️ Widget '{name}' introuvable.")
+        #     return widget
 
 
         self.reset_options_container = self.findChild(QWidget, "resetOptionsContainer")
@@ -3283,7 +3286,6 @@ class MainWindow(QMainWindow):
             """)
 
             self.ClearButton.clicked.connect(self.Clear_Button_Clicked)
-
 
 
         self.CopyButton = self.findChild(QPushButton, "CopyButton")
@@ -3469,7 +3471,6 @@ class MainWindow(QMainWindow):
         self.Isp = self.findChild(QComboBox, "Isps")
         if self.Isp is not None:
             #print("✅ QComboBox 'Isps' trouvé.")
-
             # 🔽 Style de flèche personnalisée
             if os.path.exists(ARROW_DOWN_PATH):
                 #print(f"🎨 Fichier flèche trouvé : {ARROW_DOWN_PATH}")
@@ -3597,26 +3598,26 @@ class MainWindow(QMainWindow):
     def Save_Process(self, parameters):
         try:
             response = requests.post(_SAVE_PROCESS_API, data=parameters, headers=HEADERS)
-            #print(f"🌐 [POST] URL: {_SAVE_PROCESS_API}")
-            #print(f"📤 [POST] Paramètres envoyés: {parameters}")
-            #print(f"📥 [HTTP] Code de réponse: {response.status_code}")
-            #print(f"📄 [HTTP] Réponse brute:\n{response.text}")
+            print(f"🌐 [POST] URL: {_SAVE_PROCESS_API}")
+            print(f"📤 [POST] Paramètres envoyés: {parameters}")
+            print(f"📥 [HTTP] Code de réponse: {response.status_code}")
+            print(f"📄 [HTTP] Réponse brute:\n{response.text}")
 
             results = response.json()
             status = results.get('status', False)
 
             if status is True:
-                #print(f"✅ [API] Insertion réussie ➜ ID inséré: {results.get('inserted_id')}")
+                print(f"✅ [API] Insertion réussie ➜ ID inséré: {results.get('inserted_id')}")
                 return results.get('inserted_id')
             else:
-                #print(f"❌ [API] Échec de l'insertion ➜ Détails: {results}")
+                print(f"❌ [API] Échec de l'insertion ➜ Détails: {results}")
                 return -1
 
         except ValueError as ve:
-            #print(f"💥 [JSON ERROR] Impossible de parser la réponse JSON: {ve}")
+            print(f"💥 [JSON ERROR] Impossible de parser la réponse JSON: {ve}")
             return -1
         except Exception as e:
-            #print(f"💥 [EXCEPTION] Erreur lors de l'appel POST: {e}")
+            print(f"💥 [EXCEPTION] Erreur lors de l'appel POST: {e}")
             return -1
 
         
@@ -3864,12 +3865,9 @@ class MainWindow(QMainWindow):
                 os.remove(SESSION_PATH)
                 #print("[LOGOUT] Session supprimée.")
 
-
-
             # selected_browser
             if(SELECTED_BROWSER_GLOBAL):
                 Stop_All_Processes(self)
-
 
             # Revenir à la fenêtre de connexion
             self.login_window = LoginWindow()
@@ -3881,7 +3879,6 @@ class MainWindow(QMainWindow):
             y = (screen_geometry.height() - self.login_window.height()) // 2
             self.login_window.move(x, y)
             self.login_window.show()
-
             # Fermer la fenêtre actuelle (MainWindow)
             self.close()
 
@@ -4264,7 +4261,7 @@ class MainWindow(QMainWindow):
 
 
         if not Process_Browser(window, selected_Browser):
-            # #print(f"\n⛔ Échec du processus navigateur '{selected_Browser}'. Vérifie les logs ci-dessus.")
+            #print(f"\n⛔ Échec du processus navigateur '{selected_Browser}'. Vérifie les logs ci-dessus.")
             return
 
 
@@ -4302,8 +4299,8 @@ class MainWindow(QMainWindow):
                 full_state = widget.property("full_state")
                 hidden_id = full_state.get("id") if full_state else None
                 
-                # #print(f"📋 full_state: {full_state}")  # Afficher le contenu de full_state
-                # #print(f"📋 hidden_id: {hidden_id}")    # Afficher la valeur de hidden_id
+                print(f"📋 full_state: {full_state}")  # Afficher le contenu de full_state
+                print(f"📋 hidden_id: {hidden_id}")    # Afficher la valeur de hidden_id
 
                 checkbox = next((child for child in widget.children() if isinstance(child, QCheckBox)), None)
 
@@ -4546,11 +4543,11 @@ class MainWindow(QMainWindow):
         CURRENT_DATE = current_time.strftime("%Y-%m-%d")
         CURRENT_HOUR = current_time.strftime("%H-%M-%S") 
         modified_json = self.Process_Split_Json(output_json)
-        #print(f"📦 JSON Modifié après Process_Split_Json:{json.dumps(modified_json, indent=4, ensure_ascii=False)}")
+        print(f"📦 JSON Modifié après Process_Split_Json:{json.dumps(modified_json, indent=4, ensure_ascii=False)}")
         output_json = self.Process_Handle_Last_Element(modified_json)
-        #print(f"📦 JSON Modifié après Process_Handle_Last_Element:{json.dumps(output_json, indent=4, ensure_ascii=False)}")
+        print(f"📦 JSON Modifié après Process_Handle_Last_Element:{json.dumps(output_json, indent=4, ensure_ascii=False)}")
         output_json_final=self.Process_Modify_Json(output_json)
-        #print(f"📦 JSON Final après Process_Modify_Json:{json.dumps(output_json_final, indent=4, ensure_ascii=False)}")
+        print(f"📦 JSON Final après Process_Modify_Json:{json.dumps(output_json_final, indent=4, ensure_ascii=False)}")
         result_json = self.Save_Json_To_File(output_json_final, selected_Browser)
 
         if result_json == "ERROR":
@@ -4576,7 +4573,7 @@ class MainWindow(QMainWindow):
 
 
         json_string = json.dumps(output_json_final)
-        #print("✈️​✈️​✈️​✈️​✈️​✈️​ : ",json_string)
+        print("✈️​✈️​✈️​✈️​✈️​✈️​ : ",json_string)
 
         parameters = { 
             'p_owner':session_info["username"],
@@ -4591,16 +4588,16 @@ class MainWindow(QMainWindow):
         unique_id=self.Save_Process(parameters)
 
         if unique_id==-1:
-            #print("Error getting process ID ")
+            print("Error getting process ID ")
             os.system("pause")
             exit()
             return
 
 
-        # with ThreadPoolExecutor(max_workers=2) as executor:
-        #     executor.submit(Start_Extraction, window, data_list , entered_number, selected_Browser, self.Isp.currentText() , unique_id , output_json_final, session_info["username"])
-        #     executor.submit(self.LOGS_THREAD.start)
-        # EXTRACTION_THREAD.finished.connect(lambda: self.Extraction_Finished(window))
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            executor.submit(Start_Extraction, window, data_list , entered_number, selected_Browser, self.Isp.currentText() , unique_id , output_json_final, session_info["username"])
+            executor.submit(self.LOGS_THREAD.start)
+        EXTRACTION_THREAD.finished.connect(lambda: self.Extraction_Finished(window))
 
 
 
@@ -5680,7 +5677,7 @@ class MainWindow(QMainWindow):
 
 
     def Scenario_Changed(self, name_selected):
-        #print("Scenario_Changed called with name_selected=%r", name_selected)
+        print("Scenario_Changed called with name_selected=%r", name_selected)
 
         # 1) تحقق من ملف الجلسة
         if not os.path.exists(SESSION_PATH):
@@ -5753,6 +5750,18 @@ class MainWindow(QMainWindow):
             #print("Erreur en vérifiant la clé 'session' du résultat")
             return
 
+
+
+        for i in reversed(range(self.scenario_layout.count())):
+            item = self.scenario_layout.itemAt(i)
+            if item:
+                widget = item.widget()
+                if widget:
+                    widget_name = widget.objectName() if widget.objectName() else widget.__class__.__name__
+                    # print(f"   🗑️ Suppression du widget: {widget_name}")
+                    widget.deleteLater()
+                # else:
+                    # print(f"   📦 Élément non-widget trouvé à l'index {i}")
         # إذا العملية ناجحة
         try:
             if result.get("success"):
@@ -5764,7 +5773,7 @@ class MainWindow(QMainWindow):
                 # التأكد من وجود state_stack
                 state_stack = scenario.get("state_stack")
                 if not isinstance(state_stack, list):
-                    #print("state_stack n'est pas une liste (type=%s). Tentative de conversion...", type(state_stack))
+                    print("state_stack n'est pas une liste (type=%s). Tentative de conversion...", type(state_stack))
                     # محاولة تصحيح إذا كانت سلسلة JSON
                     if isinstance(state_stack, str):
                         try:
