@@ -24,7 +24,7 @@ DIRECTERY_VERSIONS   = os.path.join(SCRIPT_DIR, "Programme-main")
 CHECK_URL_PROGRAMM       = "https://www.dropbox.com/scl/fi/78a38bc4papwzlw80hxti/version.json?rlkey=n7dx5mb8tcctvprn0wq4ojw7m&st=z6vzw0ox&dl=1"
 SERVEUR_ZIP_URL_PROGRAMM = "https://github.com/Azedize/Programme/archive/refs/heads/main.zip"
 
-# change to url from server 
+
 
 
 
