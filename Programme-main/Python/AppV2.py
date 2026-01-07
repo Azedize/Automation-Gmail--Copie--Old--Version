@@ -571,6 +571,7 @@ def Download_Extract(new_versions):
             # Tools update
             tools_target = os.path.join(PARENT_DIR, "tools")
             new_tools_root = os.path.join(extracted_dir, "tools")
+        
 
             if not os.path.exists(new_tools_root):
                 #print("❌ [ERROR] 'tools' folder not found in archive.")
@@ -1850,13 +1851,13 @@ def Updated_Secure_Preferences(profile_name, RESULTATS_EX):
         ))
 
         # 🖨️ Affichage du chemin complet
-        #print("🔍 Étape 1 : Vérification du chemin du fichier Secure Preferences...")
-        #print(f"📂 Chemin complet du fichier 'Secure Preferences' : {secure_preferences_path}")
+        print("🔍 Étape 1 : Vérification du chemin du fichier Secure Preferences...")
+        print(f"📂 Chemin complet du fichier 'Secure Preferences' : {secure_preferences_path}")
 
         # Vérification existence fichier
         if not os.path.exists(secure_preferences_path):
-            #print(f"❌ Le fichier 'Secure Preferences' est introuvable pour le profil '{profile_name}'.")
-            #print("👉 Veuillez contacter le support technique pour assistance.")
+            print(f"❌ Le fichier 'Secure Preferences' est introuvable pour le profil '{profile_name}'.")
+            print("👉 Veuillez contacter le support technique pour assistance.")
             return None
 
         #print("✅ Étape 2 : Fichier trouvé. Lecture du contenu JSON...")
@@ -1865,52 +1866,52 @@ def Updated_Secure_Preferences(profile_name, RESULTATS_EX):
 
         # Vérification structure
         if "extensions" not in data:
-            #print("⚠️ Aucune clé 'extensions' trouvée. Initialisation forcée...")
+            print("⚠️ Aucune clé 'extensions' trouvée. Initialisation forcée...")
             data["extensions"] = {}
 
         data["extensions"].setdefault("ui", {})
-        # data["extensions"].setdefault("settings", {})
-        # data.setdefault("protection", {}).setdefault("macs", {}).setdefault("extensions", {}).setdefault("settings", {})
-        # data["protection"]["macs"]["extensions"].setdefault("ui", {})
+        data["extensions"].setdefault("settings", {})
+        data.setdefault("protection", {}).setdefault("macs", {}).setdefault("extensions", {}).setdefault("settings", {})
+        data["protection"]["macs"]["extensions"].setdefault("ui", {})
 
         #print("✅ Étape 3 : Structure JSON vérifiée et préparée.")
 
         # 🔄 Ajouter les résultats sans supprimer les anciennes valeurs
-        #print("🔄 Étape 4 : Mise à jour des paramètres avec RESULTATS_EX...")
+        print("🔄 Étape 4 : Mise à jour des paramètres avec RESULTATS_EX...")
         for idx, item in enumerate(RESULTATS_EX, start=1):
-            #print(f"➡️ Traitement de l'élément {idx} : {item}")
+            print(f"➡️ Traitement de l'élément {idx} : {item}")
 
             if not isinstance(item, dict):
-                #print("⚠️ Ignoré (élément non dict).")
+                print("⚠️ Ignoré (élément non dict).")
                 continue
 
             for k, v in item.items():
                 if isinstance(v, dict) and "account_extension_type" in v:
                     data["extensions"]["settings"][k] = v
-                    #print(f"   📝 Ajout/maj dans extensions.settings[{k}] = {v}")
+                    print(f"   📝 Ajout/maj dans extensions.settings[{k}] = {v}")
 
                 elif isinstance(v, str) and len(v) > 30 and k != "developer_mode":
                     data["protection"]["macs"]["extensions"]["settings"][k] = v
-                    #print(f"   🔐 Ajout/maj MAC dans protection.macs.extensions.settings[{k}]")
+                    print(f"   🔐 Ajout/maj MAC dans protection.macs.extensions.settings[{k}]")
 
                 elif isinstance(v, bool) and k == "developer_mode":
                     data["extensions"]["ui"]["developer_mode"] = v
-                    #print(f"   ⚙️ developer_mode activé/désactivé (extensions.ui) : {v}")
+                    print(f"   ⚙️ developer_mode activé/désactivé (extensions.ui) : {v}")
 
                 elif isinstance(v, str) and k == "developer_mode":
                     data["protection"]["macs"]["extensions"]["ui"]["developer_mode"] = v
-                    #print(f"   🔐 MAC pour developer_mode ajouté dans protection.macs.extensions.ui")
+                    print(f"   🔐 MAC pour developer_mode ajouté dans protection.macs.extensions.ui")
 
         # Sauvegarde
-        #print("💾 Étape 5 : Écriture du fichier JSON mis à jour...")
+        print("💾 Étape 5 : Écriture du fichier JSON mis à jour...")
         with open(secure_preferences_path, "w", encoding="utf-8") as f:
             json.dump(data, f, separators=(',', ':'), ensure_ascii=False)
 
-        #print("✅ Étape 6 : Mise à jour terminée avec succès !")
+        print("✅ Étape 6 : Mise à jour terminée avec succès !")
         return data
 
     except Exception as e:
-        #print(f"❌ Erreur lors de la mise à jour du fichier Secure Preferences : {e}")
+        print(f"❌ Erreur lors de la mise à jour du fichier Secure Preferences : {e}")
         return None
 
 
@@ -1923,7 +1924,7 @@ def Search_Keys(data, CLES_RECHERCHE, RESULTATS):
     if isinstance(data, dict):
         for key, value in data.items():
             if key in CLES_RECHERCHE:
-                #print(f"🔑 Clé trouvée : {key} ➜ Valeur : {value}") 
+                print(f"🔑 Clé trouvée : {key} ➜ Valeur : {value}") 
                 RESULTATS.append({key: value})
             Search_Keys(value, CLES_RECHERCHE, RESULTATS)
     elif isinstance(data, list):
@@ -1939,54 +1940,54 @@ def Search_Keys(data, CLES_RECHERCHE, RESULTATS):
 
 
 def Upload_EXTENTION_PROXY(profile_name, CLES_RECHERCHE, RESULTATS):
-    #print("====================================================")
-    #print(f"📂 Début du traitement pour le profil : {profile_name}")
-    #print("====================================================")
+    print("====================================================")
+    print(f"📂 Début du traitement pour le profil : {profile_name}")
+    print("====================================================")
 
     # Construction du chemin complet du fichier "Secure Preferences"
     profile_path_file_secure_preferences = os.path.join(
         CONFIG_PROFILE, profile_name, "Secure Preferences"
     )
-    #print(f"🔍 Chemin du fichier Secure Preferences : {profile_path_file_secure_preferences}")
+    print(f"🔍 Chemin du fichier Secure Preferences : {profile_path_file_secure_preferences}")
 
     # Vérification si le fichier existe
     if not os.path.exists(profile_path_file_secure_preferences):
-        #print("❌ Erreur : le fichier 'Secure Preferences' est introuvable !")
-        #print("👉 Vérifiez que le profil Chrome existe correctement ou contactez le support.")
+        print("❌ Erreur : le fichier 'Secure Preferences' est introuvable !")
+        print("👉 Vérifiez que le profil Chrome existe correctement ou contactez le support.")
         return None
 
     try:
         # Lecture du fichier JSON
-        #print("📖 Lecture du fichier JSON en cours ...")
+        print("📖 Lecture du fichier JSON en cours ...")
         with open(profile_path_file_secure_preferences, "r", encoding="utf-8") as f:
             data = json.load(f)
         #print("✅ Lecture réussie du fichier Secure Preferences.")
 
         # Nettoyage de la liste des résultats
         RESULTATS.clear()
-        #print("🧹 Initialisation de la liste des résultats (RESULTATS) ...")
+        print("🧹 Initialisation de la liste des résultats (RESULTATS) ...")
 
         # Recherche des clés
-        #print(f"🔎 Début de la recherche des clés : {CLES_RECHERCHE}")
+        print(f"🔎 Début de la recherche des clés : {CLES_RECHERCHE}")
         Search_Keys(data, CLES_RECHERCHE, RESULTATS)
 
         # Affichage des résultats trouvés
-        #print("📌 Résultats trouvés :")
+        print("📌 Résultats trouvés :")
         if RESULTATS:
             for idx, item in enumerate(RESULTATS, start=1):
                 print(f"   {idx}. {item}")
         else:
             print("⚠️ Aucun résultat trouvé pour les clés spécifiées.")
 
-        #print("====================================================")
-        #print(f"✅ Fin du traitement pour le profil : {profile_name}")
-        #print("====================================================")
+        print("====================================================")
+        print(f"✅ Fin du traitement pour le profil : {profile_name}")
+        print("====================================================")
 
         return RESULTATS
 
     except Exception as e:
-        #print("❌ Une erreur inattendue est survenue lors du traitement du fichier Secure Preferences.")
-        #print(f"➡️ Détail de l'erreur : {e}")
+        print("❌ Une erreur inattendue est survenue lors du traitement du fichier Secure Preferences.")
+        print(f"➡️ Détail de l'erreur : {e}")
         return None
 
 
@@ -2100,7 +2101,7 @@ class ExtractionThread(QThread):
         #                 if len(parts) == 3:
         #                     username = parts[0].strip()
         #                     date_str = parts[1].strip()
-        #                     p_entity = parts[2].strip()
+                            # p_entity = parts[2].strip()
         # else:
         #     #print("[❌] session.txt introuvable")
 
@@ -3086,23 +3087,6 @@ def Process_Browser(window, selected_Browser):
 
 
 def check_session(SESSION_PATH, KEY):
-    """
-    Vérifie la validité d'une session stockée dans un fichier session.txt
-    et retourne un dictionnaire avec les informations utiles.
-
-    Args:
-        SESSION_PATH (str): Chemin vers le fichier session.
-        KEY (bytes/str): Clé utilisée pour le déchiffrement.
-
-    Returns:
-        dict: {
-            "valid": bool,
-            "username": str or None,
-            "date": datetime or None,
-            "p_entity": str or None,
-            "error": str or None
-        }
-    """
     session_info = {
         "valid": False,
         "username": None,
@@ -4211,7 +4195,7 @@ class MainWindow(QMainWindow):
         #     if 'version_python' in new_versions or 'version_interface' in new_versions:
         #         Show_Critical_Message(
         #             window,
-        #             "Update Required",
+                    # "Update Required",
         #             "A new update is available for the application.\n\n"
         #             "The program will now restart to apply the latest changes.",
         #             message_type="info"
